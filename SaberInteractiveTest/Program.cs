@@ -199,34 +199,27 @@ namespace SaberInteractiveTest
             }
 
             Count = count;
-            if (count == 1)
-            {
-                Head = listNodes[0];
-                Tail = listNodes[0];
-            }
-            else
-            {
-                SetReferences(listNodes, randomReferences);
 
-                Head = listNodes[0];
-                Tail = listNodes[count - 1];
-            }
+            //Восстанавливаем ссылочную структуру, если в списке больше 1 элемента
+            if (count > 1)
+                SetReferences(listNodes, randomReferences);
+            Head = listNodes[0];
+            Tail = listNodes[count - 1];
         }
 
         private void SetReferences(ListNode[] listNodes, int[] randomReferences)
         {
-            if(listNodes.Length == 0) 
-                return;
-
             //Восстановление ссылочной структуры списка на основе массивов
             for (int i = 0; i < listNodes.Length; i++)
             {
+                //Отдельная обработка первого элемента
                 if (i == 0)
                 {
                     listNodes[i].Next = listNodes[i + 1];
                     if (randomReferences[i] != -1)
                         listNodes[i].Random = listNodes[randomReferences[i]];
                 }
+                //Отдельная обработка последнего элемента
                 else if (i == listNodes.Length - 1)
                 {
                     listNodes[i].Previous = listNodes[i - 1];
